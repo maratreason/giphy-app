@@ -16,10 +16,13 @@
 
 <script>
 export default {
-    computed: {
-        favorites() {
-            return JSON.parse(localStorage.getItem("pictures") || "[]");
-        }
+    data() {
+        return {
+            favorites: []
+        };
+    },
+    mounted() {
+        this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
     }
 };
 </script>
