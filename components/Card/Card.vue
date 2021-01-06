@@ -30,8 +30,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+    name: "Card",
     props: {
         picture: Object
     },
@@ -44,7 +45,7 @@ export default {
         this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
     },
     methods: {
-        addToFavorites(obj) {
+        addToFavorites(obj: Object) {
             let favoritesArray = JSON.parse(
                 localStorage.getItem("pictures") || "[]"
             );
@@ -54,11 +55,11 @@ export default {
             localStorage.setItem("pictures", JSON.stringify(favoritesArray));
             this.favorites = favoritesArray;
         },
-        removeFromFavorites(id) {
+        removeFromFavorites(id: String) {
             const oldFavorites = JSON.parse(
                 localStorage.getItem("pictures") || "[]"
             );
-            const newFavorites = oldFavorites.filter(el => el.id !== id);
+            const newFavorites = oldFavorites.filter((el: any) => el.id !== id);
             localStorage.setItem("pictures", JSON.stringify(newFavorites));
             this.favorites = newFavorites;
         }

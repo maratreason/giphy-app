@@ -6,6 +6,8 @@
                 class="form-control"
                 aria-label="Text input with segmented dropdown button"
                 v-model="searchText"
+                ref="searchRef"
+                @keyup.enter="search"
             />
             <button
                 type="button"
@@ -36,6 +38,9 @@ export default {
             searchText: ""
         };
     },
+    mounted() {
+        this.focusInput();
+    },
     methods: {
         async search() {
             this.pictures = await this.$axios
@@ -43,6 +48,9 @@ export default {
                     `https://api.giphy.com/v1/gifs/search?api_key=QSLQ6m8Xpd4QPTsWCBgXDQaYwN1OL2od&q=${this.searchText}&limit=8`
                 )
                 .then(resp => resp.data.data);
+        },
+        focusInput() {
+            this.$refs.searchRef.focus();
         }
     }
 };

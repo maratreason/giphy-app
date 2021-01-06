@@ -5,22 +5,22 @@ export const state = () => {
 };
 
 export const mutations = {
-    setPictures(state, pictures) {
+    setPictures(state: any, pictures: Array<Object>)  {
         state.pictures = pictures;
     }
 };
 
 export const actions = {
-    async fetchPictures({ commit }) {
+    async fetchPictures({ commit }: any) {
         const pictures = await this.$axios
             .get(
                 "https://api.giphy.com/v1/gifs/trending?api_key=QSLQ6m8Xpd4QPTsWCBgXDQaYwN1OL2od"
             )
-            .then(resp => resp.data.data);
+            .then((resp: any) => resp.data.data);
         commit("setPictures", pictures);
     }
 };
 
 export const getters = {
-    pictures: st => st.pictures
+    pictures: (st: any) => st.pictures
 };
