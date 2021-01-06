@@ -16,7 +16,7 @@
 
 <script lang="ts">
 export default {
-    name: "favorites",
+    name: "Favorites",
     computed: {
         favorites() {
             return this.$store.getters["pictures/favorites"];

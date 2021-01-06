@@ -30,8 +30,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+    name: "Search",
     data() {
         return {
             searchText: ""
@@ -45,6 +46,7 @@ export default {
             this.$store.dispatch("pictures/searchPictures", this.searchText);
         },
         focusInput() {
+
             this.$refs.searchRef.focus();
         }
     },
