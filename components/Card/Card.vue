@@ -10,7 +10,7 @@
             <p class="card-text">
                 {{ picture.import_datetime }}
             </p>
-            <div v-if="favorites.find(el => el.id === picture.id)">
+            <div v-if="favorites && favorites.find(el => el.id === picture.id)">
                 <button
                     class="btn btn-warning"
                     @click="removeFromFavorites(picture.id)"
@@ -38,30 +38,17 @@ export default {
     props: {
         picture: Picture
     },
-    data() {
-        return {
-            favorites: Array<Picture>([])
-        };
-    },
-    mounted() {
-        this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
+    computed: {
+        favorites() {
+            return this.$store.getters["pictures/favorites"];
+        }
     },
     methods: {
         addToFavorites(obj: Picture) {
-            let favoritesArray: Array<Picture> = JSON.parse(
-                localStorage.getItem("pictures") || "[]"
-            );
-            if (!favoritesArray.includes(obj)) {
-                favoritesArray.push(obj);
-            }
-            localStorage.setItem("pictures", JSON.stringify(favoritesArray));
+            this.$store.dispatch("pictures/setFavorites", obj);
         },
         removeFromFavorites(id: String): void {
-            const oldFavorites = JSON.parse(
-                localStorage.getItem("pictures") || "[]"
-            );
-            const newFavorites = oldFavorites.filter((el: Picture) => el.id !== id);
-            localStorage.setItem("pictures", JSON.stringify(newFavorites));
+            this.$store.dispatch("pictures/deleteFavorites", id);
         }
     }
 };

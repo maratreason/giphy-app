@@ -17,7 +17,7 @@ import Vue from "vue";
 import Card from "@/components/Card/Card.vue";
 
 export default Vue.extend({
-    name: "component",
+    name: "index",
     components: {
         Card
     },
