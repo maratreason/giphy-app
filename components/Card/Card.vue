@@ -10,7 +10,7 @@
             <p class="card-text">
                 {{ picture.import_datetime }}
             </p>
-            <div v-if="favorites.find(el => el.id === picture.id)">
+            <div v-if="favorites && favorites.find(el => el.id === picture.id)">
                 <button
                     class="btn btn-warning"
                     @click="removeFromFavorites(picture.id)"
@@ -30,37 +30,25 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import Picture from "@/types/types.ts";
+
 export default {
+    name: "Card",
     props: {
-        picture: Object
+        picture: Picture
     },
-    data() {
-        return {
-            favorites: []
-        };
-    },
-    mounted() {
-        this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
+    computed: {
+        favorites() {
+            return this.$store.getters["pictures/favorites"];
+        }
     },
     methods: {
-        addToFavorites(obj) {
-            let favoritesArray = JSON.parse(
-                localStorage.getItem("pictures") || "[]"
-            );
-            if (!favoritesArray.includes(obj)) {
-                favoritesArray.push(obj);
-            }
-            localStorage.setItem("pictures", JSON.stringify(favoritesArray));
-            this.favorites = favoritesArray;
+        addToFavorites(obj: Picture) {
+            this.$store.dispatch("pictures/setFavorites", obj);
         },
-        removeFromFavorites(id) {
-            const oldFavorites = JSON.parse(
-                localStorage.getItem("pictures") || "[]"
-            );
-            const newFavorites = oldFavorites.filter(el => el.id !== id);
-            localStorage.setItem("pictures", JSON.stringify(newFavorites));
-            this.favorites = newFavorites;
+        removeFromFavorites(id: String): void {
+            this.$store.dispatch("pictures/deleteFavorites", id);
         }
     }
 };

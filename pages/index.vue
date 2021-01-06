@@ -12,11 +12,12 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
-import Card from "@/components/Card/Card";
+import Card from "@/components/Card/Card.vue";
 
-export default {
+export default Vue.extend({
+    name: "index",
     components: {
         Card
     },
@@ -30,7 +31,7 @@ export default {
             return this.$store.getters["pictures/pictures"];
         }
     }
-};
+});
 </script>
 
 <style scoped>

@@ -14,15 +14,13 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
-    data() {
-        return {
-            favorites: []
-        };
-    },
-    mounted() {
-        this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
+    name: "favorites",
+    computed: {
+        favorites() {
+            return this.$store.getters["pictures/favorites"];
+        }
     }
 };
 </script>
