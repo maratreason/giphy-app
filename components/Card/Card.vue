@@ -31,37 +31,37 @@
 </template>
 
 <script lang="ts">
+import Picture from "@/types/types.ts";
+
 export default {
     name: "Card",
     props: {
-        picture: Object
+        picture: Picture
     },
     data() {
         return {
-            favorites: []
+            favorites: Array<Picture>([])
         };
     },
     mounted() {
         this.favorites = JSON.parse(localStorage.getItem("pictures") || "[]");
     },
     methods: {
-        addToFavorites(obj: Object) {
-            let favoritesArray = JSON.parse(
+        addToFavorites(obj: Picture) {
+            let favoritesArray: Array<Picture> = JSON.parse(
                 localStorage.getItem("pictures") || "[]"
             );
             if (!favoritesArray.includes(obj)) {
                 favoritesArray.push(obj);
             }
             localStorage.setItem("pictures", JSON.stringify(favoritesArray));
-            this.favorites = favoritesArray;
         },
-        removeFromFavorites(id: String) {
+        removeFromFavorites(id: String): void {
             const oldFavorites = JSON.parse(
                 localStorage.getItem("pictures") || "[]"
             );
-            const newFavorites = oldFavorites.filter((el: any) => el.id !== id);
+            const newFavorites = oldFavorites.filter((el: Picture) => el.id !== id);
             localStorage.setItem("pictures", JSON.stringify(newFavorites));
-            this.favorites = newFavorites;
         }
     }
 };
