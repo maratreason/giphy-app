@@ -1,4 +1,4 @@
-type Picture = {
+export type Picture = {
     analytics: Object
     analytics_response_payload: String
     bitly_gif_url: String

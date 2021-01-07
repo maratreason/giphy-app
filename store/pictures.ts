@@ -1,3 +1,20 @@
+import { Picture } from "@/types/types";
+
+export type StoreType = {
+    dispatch: Function;
+    commit: Function;
+    getters: Object;
+    state: Object;
+    rootGetters: Object;
+    rootState: Object;
+};
+
+type StateType = {
+    pictures: Array<Object>,
+    favorites: Array<Object>,
+    searchedPictures: Array<Object>,
+}
+
 export const state = () => {
     return {
         pictures: [],
@@ -7,43 +24,44 @@ export const state = () => {
 };
 
 export const mutations = {
-    setPictures(state: any, pictures: Array<Object>) {
+    setPictures(state: StateType, pictures: Array<Picture>) {
         state.pictures = pictures;
     },
-    setSearchedPictures(state: any, pictures: Array<Object>) {
+    setSearchedPictures(state: StateType, pictures: Array<Picture>) {
         state.searchedPictures = pictures;
     },
-    setFavorites(state: any, favorites: Array<Object>) {
+    setFavorites(state: StateType, favorites: Array<Picture>) {
         state.favorites.push(favorites);
     },
-    deleteFavorites(state: any, id: String) {
+    deleteFavorites(state: StateType, id: String) {
         state.favorites = state.favorites.filter((el: any) => el.id !== id);
     }
 };
 
+
 export const actions = {
-    async fetchPictures({ commit }: any) {
+    async fetchPictures({ commit }: StoreType) {
         const { data } = await this.$axios.get(
             "https://api.giphy.com/v1/gifs/trending?api_key=QSLQ6m8Xpd4QPTsWCBgXDQaYwN1OL2od"
         );
         commit("setPictures", data.data);
     },
-    async searchPictures({ commit }: any, searchText: String) {
+    async searchPictures({ commit }: StoreType, searchText: String) {
         const { data } = await this.$axios.get(
             `https://api.giphy.com/v1/gifs/search?api_key=QSLQ6m8Xpd4QPTsWCBgXDQaYwN1OL2od&q=${searchText}&limit=8`
         );
         commit("setSearchedPictures", data.data);
     },
-    setFavorites({ commit }: any, favorites: Array<Object>) {
+    setFavorites({ commit }: StoreType, favorites: Array<Picture>) {
         commit("setFavorites", favorites);
     },
-    deleteFavorites({ commit }: any, id: String) {
+    deleteFavorites({ commit }: StoreType, id: String) {
         commit("deleteFavorites", id);
     }
 };
 
 export const getters = {
-    pictures: (st: any) => st.pictures,
-    favorites: (st: any) => st.favorites,
-    searchedPictures: (st: any) => st.searchedPictures
+    pictures: (st: StateType) => st.pictures,
+    favorites: (st: StateType) => st.favorites,
+    searchedPictures: (st: StateType) => st.searchedPictures
 };

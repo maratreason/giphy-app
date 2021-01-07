@@ -31,7 +31,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
     name: "Search",
     data() {
         return {
@@ -46,8 +48,8 @@ export default {
             this.$store.dispatch("pictures/searchPictures", this.searchText);
         },
         focusInput() {
-
-            this.$refs.searchRef.focus();
+            let refs = <HTMLInputElement> this.$refs.searchRef;
+            refs.focus();
         }
     },
     computed: {
@@ -55,7 +57,7 @@ export default {
             return this.$store.getters["pictures/searchedPictures"];
         }
     }
-};
+});
 </script>
 
 <style scoped>
