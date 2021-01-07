@@ -31,12 +31,13 @@
 </template>
 
 <script lang="ts">
-import Picture from "@/types/types.ts";
+import Vue from "vue";
+import { Picture } from "@/types/types";
 
-export default {
+export default Vue.extend({
     name: "Card",
     props: {
-        picture: Picture
+        picture: Object
     },
     computed: {
         favorites() {
@@ -44,14 +45,14 @@ export default {
         }
     },
     methods: {
-        addToFavorites(obj: Picture) {
+        addToFavorites(obj: Picture): void {
             this.$store.dispatch("pictures/setFavorites", obj);
         },
         removeFromFavorites(id: String): void {
             this.$store.dispatch("pictures/deleteFavorites", id);
         }
     }
-};
+});
 </script>
 
 <style></style>

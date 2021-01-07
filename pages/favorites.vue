@@ -15,14 +15,16 @@
 </template>
 
 <script lang="ts">
-export default {
-    name: "favorites",
+import Vue from "vue";
+
+export default Vue.extend({
+    name: "Favorites",
     computed: {
         favorites() {
             return this.$store.getters["pictures/favorites"];
         }
     }
-};
+});
 </script>
 
 <style></style>
