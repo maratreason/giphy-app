@@ -1,4 +1,5 @@
 import { Picture } from "@/types/types";
+import { ActionTree, MutationTree, GetterTree  } from "vuex";
 
 export type StoreType = {
     dispatch: Function;
@@ -9,10 +10,16 @@ export type StoreType = {
     rootState: Object;
 };
 
-type StateType = {
-    pictures: Array<Object>,
+export type StateType = {
+    pictures: Array<Picture>,
     favorites: Array<Object>,
-    searchedPictures: Array<Object>,
+    searchedPictures: Array<Picture>,
+}
+
+export type Getters = {
+    pictures(state: StateType): Array<Picture>
+    favorites(state: StateType): Array<Object>
+    searchedPictures(state: StateType): Array<Picture>
 }
 
 export const state = () => {
@@ -23,7 +30,7 @@ export const state = () => {
     };
 };
 
-export const mutations = {
+export const mutations: MutationTree<StateType> = {
     setPictures(state: StateType, pictures: Array<Picture>) {
         state.pictures = pictures;
     },
@@ -38,8 +45,7 @@ export const mutations = {
     }
 };
 
-
-export const actions = {
+export const actions: ActionTree<StoreType, StoreType> = {
     async fetchPictures({ commit }: StoreType) {
         const { data } = await this.$axios.get(
             "https://api.giphy.com/v1/gifs/trending?api_key=QSLQ6m8Xpd4QPTsWCBgXDQaYwN1OL2od"
@@ -60,7 +66,7 @@ export const actions = {
     }
 };
 
-export const getters = {
+export const getters: GetterTree<StateType, StateType> & Getters = {
     pictures: (st: StateType) => st.pictures,
     favorites: (st: StateType) => st.favorites,
     searchedPictures: (st: StateType) => st.searchedPictures
