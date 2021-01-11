@@ -33,7 +33,6 @@ export default Vue.extend({
     }
 });
 </script>
-
 <style scoped>
 .card-wrapper {
     box-sizing: border-box;
